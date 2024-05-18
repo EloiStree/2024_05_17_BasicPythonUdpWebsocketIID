@@ -13,6 +13,7 @@ def handle_integer_received(integer):
     # if you want to broadcast the data to apps with UDP
     broadcast_to_targets(int(i))
     ## If you want in the script
+    print(f"R|{integer}")
 
 
 
@@ -68,25 +69,31 @@ def get_current_ip():
 
 
 async def handle_message(websocket, path):
-    async for message in websocket:
-        message_length = len(message)
+    try:
+        async for message in websocket:
+            message_length = len(message)
+
+            if message_length == 4:
+                value1 = struct.unpack('<i', message)[0]
+                if debug_received_data:
+                    print(f"Received value: {value1} (format: <i)")
+                handle_integer_received(int(value1))
+            elif message_length == 12:
+                value1, value2 = struct.unpack('<iQ', message)
+                if debug_received_data:
+                    print(f"Received values: {value1}, {value2} (format: <iQ)")
+                handle_integer_received(int(value1))
+            
+            elif message_length == 16:
+                value1, value2, value3 = struct.unpack('<iiQ', message)
+                if debug_received_data:
+                    print(f"Received values: {value1}, {value2}, {value3} (format: <iiQ)")
+                handle_dle_integer_received(int(value1))
+    except websockets.ConnectionClosedError as e:
+            print(f"Connection closed with error: {e}")
+            # Wait a bit before trying to reconnect
+            await asyncio.sleep(5)
         
-        if message_length == 4:
-            value1 = struct.unpack('<i', message)[0]
-            if debug_received_data:
-                print(f"Received value: {value1} (format: <i)")
-            handle_integer_received(int(value1))
-        elif message_length == 12:
-            value1, value2 = struct.unpack('<iQ', message)
-            if debug_received_data:
-                print(f"Received values: {value1}, {value2} (format: <iQ)")
-            handle_integer_received(int(value1))
-        
-        elif message_length == 16:
-            value1, value2, value3 = struct.unpack('<iiQ', message)
-            if debug_received_data:
-                print(f"Received values: {value1}, {value2}, {value3} (format: <iiQ)")
-            handle_integer_received(int(value1))
         
         
 
