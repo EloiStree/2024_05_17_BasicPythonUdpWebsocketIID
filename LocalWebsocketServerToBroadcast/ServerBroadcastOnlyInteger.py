@@ -4,12 +4,36 @@ import websockets
 import struct
 import os
 import socket
-
 # pip3 install websockets
 # pip3 install asyncio
 # pip3 install struct
 # pip3 install socket
+    
 
+# List of IP:PORT to broadcast the data to the apps    
+broadcast_list_udp_target={"127.0.0.1:404"}
+
+# Set to True if you want to print the received data of clients
+debug_received_data = False
+
+
+def handle_integer_received(integer):
+    i=int(integer)
+    # If you want it out of the script
+    YourCodeHere.handle_integer_received(integer)
+    # if you want to broadcast the data to apps with UDP
+    broadcast_to_targets(int(i))
+    ## If you want in the script
+
+
+
+
+
+
+
+
+
+################### Websocket don't touch  #####################
 
 filename = "YourCodeHere.py"
 if not os.path.exists(filename):
@@ -22,14 +46,6 @@ def handle_integer_received(integer):
 
 
 import YourCodeHere
-
-    
-broadcast_list_udp_target={"127.0.0.1:404"}
-
-
-
-debug_received_data = False
-
 
 def broadcast_to_targets(message):
     for target in broadcast_list_udp_target:
@@ -45,24 +61,6 @@ def broadcast_to_targets(message):
         udp_socket.sendto(struct.pack('<i', message), target_address)
         udp_socket.close()
 
-def handle_integer_received(integer):
-    i=int(integer)
-    # If you want it out of the script
-    YourCodeHere.handle_integer_received(integer)
-    # if you want to broadcast the data to apps with UDP
-    broadcast_to_targets(int(i))
-
-    ## If you want in the script
-
-
-
-
-
-
-
-
-
-################### Websocket don't touch  #####################
 def get_current_ip():
     hostname = socket.gethostname()
     ip_address = socket.gethostbyname(hostname)
