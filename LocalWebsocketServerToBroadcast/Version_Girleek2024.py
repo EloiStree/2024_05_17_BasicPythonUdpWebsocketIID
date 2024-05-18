@@ -5,6 +5,12 @@ import struct
 import os
 import socket
 
+# pip3 install websockets
+# pip3 install asyncio
+# pip3 install struct
+# pip3 install socket
+
+
 filename = "YourCodeHere.py"
 if not os.path.exists(filename):
     with open(filename, "w") as f:
@@ -16,15 +22,11 @@ def handle_integer_received(integer):
 
 
 import YourCodeHere
-import socket
 
     
 broadcast_list_udp_target={"127.0.0.1:404"}
 
 
-# pip3 install websockets
-# pip3 install asyncio
-# pip3 install struct
 
 debug_received_data = False
 
