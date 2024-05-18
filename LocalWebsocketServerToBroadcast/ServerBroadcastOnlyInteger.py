@@ -1,21 +1,10 @@
 # Source : https://github.com/EloiStree/2024_05_17_BasicPythonUdpWebsocketIID/tree/main/LocalWebsocketServerToBroadcast
-import asyncio
-import websockets
-import struct
-import os
-import socket
-# pip3 install websockets
-# pip3 install asyncio
-# pip3 install struct
-# pip3 install socket
-    
 
 # List of IP:PORT to broadcast the data to the apps    
 broadcast_list_udp_target={"127.0.0.1:404"}
 
 # Set to True if you want to print the received data of clients
 debug_received_data = False
-
 
 def handle_integer_received(integer):
     i=int(integer)
@@ -34,6 +23,17 @@ def handle_integer_received(integer):
 
 
 ################### Websocket don't touch  #####################
+
+import asyncio
+import websockets
+import struct
+import os
+import socket
+# pip3 install websockets
+# pip3 install asyncio
+# pip3 install struct
+# pip3 install socket
+
 
 filename = "YourCodeHere.py"
 if not os.path.exists(filename):
