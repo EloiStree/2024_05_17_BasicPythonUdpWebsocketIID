@@ -2,7 +2,8 @@ import asyncio
 import websockets
 
 async def send_message():
-    uri = "ws://localhost:8765"
+    uri = "ws://localhost:4513"
+    uri = "ws://81.240.94.97:4513"
     async with websockets.connect(uri) as websocket:
         key = "exampleKey"
         value = "exampleValue"
